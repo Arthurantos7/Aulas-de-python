@@ -1,26 +1,34 @@
-#Tipagem dinâmica
-import os
+import os 
 
 os.system("cls || clear")
 
-print("=== SOLICITANDO DADOS")
-nomeProduto = (input("Digite o nome do produto: "))
-quantidadeMorango = int (input("Digite a quantatidade de Morango: "))
-quantidadeMaca = int (input("Digite a quantatidade de Maçã: "))
-precoUnitario = float (input("Digite o preço únitario do produto: "))
+print("\n=== Solicitando dados ==")
+pesoMorango = float(input("Digite o peso dos morangos (em kg): "))
+pesoMaca = float(input("Digite o peso de maçãs (em kg): "))
 
-total =  quantidadeMaca + quantidadeMorango
+if pesoMorango < 5:
+    precoMorango = 2.50
+else :
+    precoMorango = 2.20
 
-if quantidadeMaca and quantidadeMorango <= 5:
-   totalDesconto = total - (total * 0.02)
-elif quantidadeAdquirida <= 10:
-   totalDesconto = total - (total * 0.03)
+if pesoMaca < 5:
+    precoMaca = 1.80
 else:
-   totalDesconto = total - (total * 0.05)
+    precoMaca = 1.50
 
-print(f"nome do produto: {nomeProduto}")
-print(f"quantidade adquirida: {quantidadeAdquirida}")
-print(f"Preço únitario: {precoUnitario}")
-print(f"Total de Desconto: {totalDesconto}")
-print(f"Total sem Desconto: {total}")
+pesoTotal = pesoMorango + pesoMaca
+subtotal  = (precoMorango + pesoMorango) + (precoMaca + pesoMaca )
+
+if pesoTotal > 8 or subtotal > 25:
+    desconto = subtotal * 0.10
+
+totalPagar = subtotal - desconto
+
+print("\n=== Exibindo resultados ===")
+print(f"Peso de morangos (em kg): {pesoMorango}")
+print(f"Peso de maçãs (em kg): {pesoMaca}")
+print(f"Soma de pesos (em kg): {pesoTotal}")
+print(f"Subtotal: R$ {subtotal: .2f}")
+print(f"Desconto: R$ {desconto: .2f}")
+print(f"Total a pagar: R$ {desconto: .2f}")
 
