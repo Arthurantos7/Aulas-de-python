@@ -1,79 +1,77 @@
-import os
-import math
+import  os
 import sys
 import time
-from dataclasses import dataclass
-def cabecalho():
+from  dataclasses import dataclass
+
+def dados():
     os.system("clear")
-    print("=== DADOS === ")
-
-def dadosSaude():
-    os.system("clear")
-    print("=== DADOS DE SAÚDE ===")
-
-def calcularIMC(peso, altura):
-    return peso / math.pow(altura, 2)
-
-def situacaoIMC(imc):
-    if imc < 18.5:
-        print("Muito magro")
-    if imc >= 18.5 and imc < 25:
-        print("Peso normal")
-    if imc >= 25 and imc < 30:
-        print("Sobrepeso")
-    if imc >= 30 and imc < 35:
-        print("Obesidade grau I")
-    if imc >= 35 and imc < 40:
-        resultado ="Obesidade grau II"
+    print("===== DADDOS DOS IMPOSTOS=====")
+    
+def inss(n1):
+    if(n1 <= 1100):
+        resultadoInss = n1 * 0.075
+    elif(n1 <= 2203.48):
+        resultadoInss = n1 * 0.09
+    elif(n1 <= 3305.22):
+        resultadoInss = n1 * 0.12
+    elif(n1 <= 6433.57):
+        resultadoInss = n1 * 0.14
     else:
-        resultado = "Obesidade grau III (mórbida)"
+        resultadoInss = n1 - (n1 - 854.36)
+    return resultadoInss
+    
+def irrf(n1):
+    if(n1 <= 2258.2):
+        resultadoIrrf = 0
+    elif(n1 <= 2826.65):
+        resultadoIrrf = n1 * 0.075
+    elif(n1 <= 3751.05):
+        resultadoIrrf = n1 * 0.15
+    elif(n1 <= 4664.68):
+        resultadoIrrf = n1 * 0.225
+    else:
+        resultadoIrrf = n1 * 0.275
+    return resultadoIrrf
+    
+def transporte(n1):
+    resultadoTransporte = n1 * 0.06
+    return resultadoTransporte
+    
+def refeicao(n1):
+    resultadoRefeicao = n1 * 0.2
+    return resultadoRefeicao
 
-    return resultado
+descontoTransporte = 0  
 
-class DadosUsuario:
-    def __init__(self,nome_do_usuario: str,sobrenome_do_usuario: str, nomeCompleto: str, idade_do_usuario, altura_do_usuario, peso_do_usuario,imc, situacao):
-
-        self.nome = nome_do_usuario
-        self.sobrenome = sobrenome_do_usuario
-        self.nomeCompleto = nome_do_usuario + sobrenome_do_usuario
-        self.idade = idade_do_usuario
-        self.altura = altura_do_usuario
-        self.peso = peso_do_usuario
-        self.imcs = imc
-        self.situacaoIMC = situacao
-
-dadosDosUsuarios = []
-nomeCompleto = str
+dados()
+matricula = input("Digite sua matricula: ")
+senha = int(input("Digite sua senha: "))
 
 while True:
-    dadosSaude()
-    nome_do_usuario = input("Digite o nome do usuário (ou digite 'sair' para encerrar): ")
-    
-    if nome_do_usuario.lower() == 'sair':
+    salario = int(input("Digite seu salario base: "))
+    if salario < 1:
+        input("Tente novamente(PRESS ENTER)")
+    else:
         break
-    
-    sobrenome_do_usuario = input("Digite o sobrenome do usuário: ")
-    idade_do_usuario = int(input("Digite a idade do usuário: "))
-    altura_do_usuario = float(input("Digite a altura do usuário (em metros): "))
-    peso_do_usuario = float(input("Digite o peso do usuário (em quilogramas): "))
-    
-    imc = calcularIMC(peso_do_usuario, altura_do_usuario)
-    situacao = situacaoIMC(imc)
-    dadosDosUsuarios.append(DadosUsuario(nome_do_usuario, sobrenome_do_usuario, nomeCompleto, idade_do_usuario, altura_do_usuario, peso_do_usuario, imc, situacao))
+while True:    
+    transporteValor = input("Deseja receber vale transporte?(sim ou não): ")
+    if (transporteValor == "sim"):
+        descontoTransporte = transporte(salario)
+        break
+    if (transporteValor == "não"):
+        break
+    if(transporteValor != "não" and transporteValor != "sim"):
+        input("Tente novamente(PRESS ENTER)")
 
-dadosSaude()
-print("\nDados dos usuários: \n")
-for i, j in enumerate(dadosDosUsuarios):
-    print(f"====== {i+1} DADOS ======")
-    print(f"Usuário {i+1}:")
-    print(f"Nome: {j.nome}")
-    print(f"Sobreome: {j.sobrenome}")
-    print(f"Nome completo: {j.nomeCompleto}")
-    print(f"Idade: {j.idade}")
-    print(f"Altura: {j.altura} metros")
-    print(f"Peso: {j.peso: .1f} quilogramas")
-    print(f"IMC: {j.imcs: .1f}")
-    print(f"Situação: {j.situacaoIMC}")
-    print()
-    
+refeicaoValor = float(input("Digite o valor do seu vale refeição: "))
 
+descontoInss = inss(salario)
+descontoIrrf = irrf(salario)
+descontoRefeicao = refeicao(refeicaoValor)
+calculo =  descontoRefeicao + descontoTransporte + 150 + descontoInss + descontoIrrf  
+salarioLiquido = salario - calculo
+
+
+print(f"Salario Liquido: {salarioLiquido: .2f}")
+print(f"Refeição: {refeicaoValor}")
+print(f"Plano de saúde: {planoSaude}")
